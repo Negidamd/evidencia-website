@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVIDENCIA | AI-Powered Tools for Evidence-Based Practice</title>
+    <meta name="description" content="EVIDENCIA develops intelligent tools for clinical researchers, scientists, and physicians. Transform your evidence synthesis with AI.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-ink: #0a1628;
+            --color-ink-light: #1e3a5f;
+            --color-ink-muted: #64748b;
+            --color-paper: #fafbfc;
+            --color-paper-warm: #f8f6f3;
+            --color-accent: #0066cc;
+            --color-accent-light: #e6f0fa;
+            --color-gold: #d4a853;
+            --color-success: #10b981;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-paper);
+            color: var(--color-ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utility */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 251, 252, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(10, 22, 40, 0.06);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--color-ink);
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-ink-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-ink-muted);
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--color-ink);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-ink);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-ink-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--color-ink);
+            border: 1px solid rgba(10, 22, 40, 0.15);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-ink);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 102, 204, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(212, 168, 83, 0.06), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--color-accent-light);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-accent);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--color-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 6vw, 64px);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--color-ink-muted);
+            max-width: 560px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            padding: 48px 0;
+            border-top: 1px solid rgba(10, 22, 40, 0.06);
+            border-bottom: 1px solid rgba(10, 22, 40, 0.06);
+            background: var(--color-paper-warm);
+        }
+
+        .trust-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .trust-number {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--color-ink);
+        }
+
+        .trust-label {
+            font-size: 14px;
+            color: var(--color-ink-muted);
+            margin-top: 4px;
+        }
+
+        .trust-divider {
+            width: 1px;
+            height: 48px;
+            background: rgba(10, 22, 40, 0.1);
+        }
+
+        /* Features */
+        .features {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--color-ink-muted);
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid rgba(10, 22, 40, 0.08);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(10, 22, 40, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(10, 22, 40, 0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--color-ink-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 12px;
+            background: var(--color-paper-warm);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-tag.live {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .feature-card.featured {
+            border-color: var(--color-success);
+            background: linear-gradient(135deg, #f0fdf4, white);
+        }
+
+        .feature-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .feature-link:hover {
+            color: var(--color-ink);
+        }
+
+        /* Audience */
+        .audience {
+            padding: 120px 0;
+            background: var(--color-ink);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 50% 80% at 20% 80%, rgba(0, 102, 204, 0.15), transparent),
+                radial-gradient(ellipse 40% 60% at 80% 20%, rgba(212, 168, 83, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .audience .section-header {
+            position: relative;
+        }
+
+        .audience .section-header h2 {
+            color: white;
+        }
+
+        .audience .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .audience-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .audience-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .audience-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .audience-card h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .audience-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--color-paper-warm), white);
+            border: 1px solid rgba(10, 22, 40, 0.08);
+            border-radius: 24px;
+            padding: 64px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            color: var(--color-ink-muted);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .cta-form {
+            display: flex;
+            gap: 12px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .cta-form input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid rgba(10, 22, 40, 0.15);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: var(--font-body);
+            transition: border-color 0.2s;
+        }
+
+        .cta-form input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 64px 0;
+            border-top: 1px solid rgba(10, 22, 40, 0.06);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-company {
+            font-size: 14px;
+            color: var(--color-ink-muted);
+        }
+
+        .footer-legal {
+            font-size: 13px;
+            color: var(--color-ink-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--color-ink-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-ink);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header-inner {
+                height: 64px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .trust-content {
+                gap: 32px;
+            }
+
+            .trust-divider {
+                display: none;
+            }
+
+            .features, .audience, .cta {
+                padding: 80px 0;
+            }
+
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .cta-box {
+                padding: 40px 24px;
+            }
+
+            .cta-form {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-mark">E</div>
+                <span class="logo-text">EVIDENCIA</span>
+            </a>
+            <nav>
+                <a href="#features">Tools</a>
+                <a href="#audience">Who We Serve</a>
+                <a href="#contact">Contact</a>
+                <a href="https://forms.gle/ZbSdCVUkntZFnoov9" target="_blank" class="btn btn-primary">Get Early Access</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Now in Development</div>
+                <h1>AI-Powered Tools for <em>Evidence-Based</em> Practice</h1>
+                <p>EVIDENCIA builds intelligent software that helps clinical researchers, scientists, and physicians synthesize evidence faster and more accurately.</p>
+                <div class="hero-actions">
+                    <a href="https://forms.gle/ZbSdCVUkntZFnoov9" target="_blank" class="btn btn-primary">Join the Waitlist</a>
+                    <a href="https://meta-analysis.io" target="_blank" class="btn btn-secondary">Try Meta-Analysis.IO</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-content">
+                <div class="trust-item">
+                    <div class="trust-number">30,000+</div>
+                    <div class="trust-label">Researchers Trained</div>
+                </div>
+                <div class="trust-divider"></div>
+                <div class="trust-item">
+                    <div class="trust-number">100+</div>
+                    <div class="trust-label">Publications</div>
+                </div>
+                <div class="trust-divider"></div>
+                <div class="trust-item">
+                    <div class="trust-number">50+</div>
+                    <div class="trust-label">Countries Reached</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tools Built for Researchers</h2>
+                <p>Our AI-powered platform accelerates every step of the evidence synthesis process</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card featured">
+                    <div class="feature-icon">📊</div>
+                    <h3>Meta-Analysis.IO</h3>
+                    <p>The most comprehensive free meta-analysis software in the world. Generate forest plots, funnel plots, and run publication bias tests. Supports pairwise and network meta-analysis with an intuitive online interface.</p>
+                    <a href="https://meta-analysis.io" target="_blank" class="feature-link">Launch Meta-Analysis.IO →</a>
+                    <span class="feature-tag live">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Systematic Review Assistant</h3>
+                    <p>AI-powered screening, data extraction, and risk of bias assessment. Reduce months of manual work to days while maintaining methodological rigor.</p>
+                    <span class="feature-tag">In Development</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧬</div>
+                    <h3>Diagnostic Test Accuracy</h3>
+                    <p>Specialized tools for DTA meta-analyses with SROC curves, sensitivity analyses, and bivariate models for clinical diagnostic studies.</p>
+                    <span class="feature-tag">Coming Soon</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Statistical Computing</h3>
+                    <p>Run complex biostatistical analyses without coding. From survival analysis to mixed-effects models, powered by validated algorithms.</p>
+                    <span class="feature-tag">Planned</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Protocol Builder</h3>
+                    <p>Generate PRISMA-compliant protocols and registration documents. AI suggestions based on your research question and methodology.</p>
+                    <span class="feature-tag">Planned</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Literature Search</h3>
+                    <p>Intelligent search strategies across PubMed, Cochrane, and other databases. Automated de-duplication and citation management.</p>
+                    <span class="feature-tag">In Development</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience -->
+    <section id="audience" class="audience">
+        <div class="container">
+            <div class="section-header">
+                <h2>Built for Evidence Practitioners</h2>
+                <p>Whether you're conducting clinical research, practicing medicine, or advancing science, our tools adapt to your workflow</p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <h3>🔬 Clinical Researchers</h3>
+                    <p>Accelerate systematic reviews and meta-analyses. Meet publication deadlines with tools designed for rigorous methodology and reproducible results.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>🩺 Physicians</h3>
+                    <p>Make evidence-based decisions at the point of care. Quickly synthesize literature to answer clinical questions and improve patient outcomes.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>🧪 Scientists</h3>
+                    <p>From bench to publication, streamline your research workflow. Integrate seamlessly with your existing tools and methodologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Be the First to Know</h2>
+                <p>Join our waitlist for early access to EVIDENCIA tools and exclusive updates on our development progress.</p>
+                <a href="https://forms.gle/ZbSdCVUkntZFnoov9" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">Join the Waitlist →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <a href="/" class="logo">
+                        <div class="logo-mark">E</div>
+                        <span class="logo-text">EVIDENCIA</span>
+                    </a>
+                    <p class="footer-company">EVIDENCIA LLC · Arizona, USA</p>
+                    <p class="footer-legal">© 2025 EVIDENCIA. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:hello@evidencia.ai">hello@evidencia.ai</a>
+                    <a href="https://x.com/MetaAnalysisIO" target="_blank">@MetaAnalysisIO</a>
+                    <a href="https://meta-analysis.io" target="_blank">Meta-Analysis.IO</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Smooth scroll for anchor links -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
